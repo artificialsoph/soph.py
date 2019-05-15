@@ -1,12 +1,10 @@
-import keras
-import numpy as np
-import tensorflow as tf
-from keras import backend as K
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn import metrics
-import functools
 
+import keras
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+from keras import backend as K
+from sklearn import metrics
 
 
 def plot_decision_boundary(pred_func, x, y, ax=None, points=1e3, pal=dict(enumerate(sns.color_palette("husl", 4))),
@@ -59,7 +57,8 @@ def plot_decision_boundary(pred_func, x, y, ax=None, points=1e3, pal=dict(enumer
         ax.contour(xx, yy, Z, colors='k', levels=[-1, 1], alpha=0.5,
                    linestyles=['--', '--'], zorder=0)
 
-#epsilon set according to BIGGAN https://arxiv.org/pdf/1809.11096.pdf
+
+# epsilon set according to BIGGAN https://arxiv.org/pdf/1809.11096.pdf
 def _l2normalizer(v, epsilon=1e-4):
     return v / (K.sum(v**2)**0.5 + epsilon)
 
@@ -193,11 +192,6 @@ class Conv2DTranspose(keras.layers.Conv2DTranspose):
         height, width = input_shape[h_axis], input_shape[w_axis]
         kernel_h, kernel_w = self.kernel_size
         stride_h, stride_w = self.strides
-        #         if self.output_padding is None:
-        #             out_pad_h = out_pad_w = None
-        #         else:
-        #             out_pad_h, out_pad_w = self.output_padding
-        out_pad_h = out_pad_w = None
 
         # Infer the dynamic output shape:
         out_height = keras.utils.conv_utils.deconv_length(
