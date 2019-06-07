@@ -5,7 +5,7 @@ from sklearn import metrics
 import hashlib
 
 
-def check_ans_hash(answer):
+def ans_hash(answer):
     """
     Compares an answer to a given hash according to https://github.com/davidcorbin/euler-offline
     """
