@@ -2,6 +2,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from sklearn import metrics
+import hashlib
+
+
+def hash(answer):
+    """
+    Compares an answer to a given hash according to https://github.com/davidcorbin/euler-offline
+    """
+    return hashlib.md5(bytes(str(answer), 'ascii')).hexdigest()
 
 
 def imshow(im, ax=None):
@@ -31,8 +39,7 @@ def imshow(im, ax=None):
             cmap = None
 
     ax.imshow(im, cmap=cmap)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
+    ax.axis(False)
 
 
 def plot_decision_boundary(pred_func, x, y, ax=None, points=1e3,
