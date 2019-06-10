@@ -1,8 +1,63 @@
+import hashlib
+import inspect
+import tempfile
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from sklearn import metrics
-import hashlib
+
+from pylint import epylint as lint
+
+
+def pylint(code, print_pylint=True, print_code=False):
+    """
+    convenience function to lint code.
+    
+    INPUTS
+        code: Can be one of
+            - python callable. in this case the inspect module will be used to recover source code. Note that a boilerplate module docstring will be added.
+            - string. in this case the function assumes that the string is the source code to be analyzed.
+        print_pylint: by default, pylint output will be printed. suppress by setting this argument to false.
+    
+    OUTPUTS
+        rating:
+            - float, pylint code rating
+    
+    """
+
+    module_docstring = """\"\"\"This is just a general module docstring
+\"\"\"\n\n"""
+
+    if callable(code):
+
+        code_str = module_docstring + inspect.getsource(code).strip() + "\n"
+        cmd_arg = " --msg-template='" + code.__name__ + ":{line}:{column}: {msg_id}: {msg} ({symbol}) http://pylint-messages.wikidot.com/messages:{msg_id}'"
+    else:
+        code_str = code
+        cmd_arg = " --msg-template='{line}:{column}: {msg_id}: {msg} ({symbol}) http://pylint-messages.wikidot.com/messages:{msg_id}'"
+
+    if print_code:
+        print(code_str)
+
+    code_file = Path(tempfile.NamedTemporaryFile(delete=False).name)
+    code_file.write_text(code_str)
+
+    (pylint_stdout,
+     pylint_stderr) = lint.py_run(str(code_file) + cmd_arg, return_std=True)
+
+    code_file.unlink()
+
+    stdout = pylint_stdout.read()
+
+    if print_pylint:
+        print(stdout)
+
+    rating_str = stdout.split("Your code has been rated at ")[-1]
+    rating = float(rating_str[:-7])
+
+    return rating
 
 
 def hash(answer):
