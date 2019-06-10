@@ -17,6 +17,25 @@ Python 2.7/3.5+ and PyPy.
 
     $ pip install soph
 
+Development
+-----------
+This is mostly so I don't forget!
+
+version bump with
+```bash
+hatch grow major/minor/fix
+```
+
+build with
+```bash
+setup.py sdist bdist_wheel
+```
+
+upload with
+```bash
+hatch release
+```
+
 License
 -------
 
