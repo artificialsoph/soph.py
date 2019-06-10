@@ -28,7 +28,7 @@ hatch grow major/minor/fix
 
 build with
 ```bash
-setup.py sdist bdist_wheel
+python3 setup.py sdist bdist_wheel
 ```
 
 upload with
