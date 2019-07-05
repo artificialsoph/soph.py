@@ -19,7 +19,10 @@ Python 2.7/3.5+ and PyPy.
 
 Development
 -----------
-This is mostly so I don't forget!
+
+See https://packaging.python.org/tutorials/packaging-projects/ for more info on packaging projects.
+
+For this package, the following code is used to upload changes. This is mostly so I don't forget!
 
 version bump with
 ```bash
