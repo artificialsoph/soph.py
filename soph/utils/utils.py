@@ -94,7 +94,7 @@ def imshow(im, ax=None):
             cmap = None
 
     ax.imshow(im, cmap=cmap)
-    ax.axis(False)
+    ax.set_axis_off()
 
 
 def plot_decision_boundary(pred_func, x, y, ax=None, points=1e3,
